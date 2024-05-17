@@ -458,7 +458,7 @@ contract TestMemeTaxedToken is ERC20, Ownable {
     address public taxRecipient;
     address public treasuryAddress;
 
-    uint256 private constant FIXED_TREASURY_TAX = 5; // 0.5% (5 / 1000)
+    uint256 private constant FIXED_TREASURY_TAX = 5;
 
     enum TransactionType { BUY, SELL, TRANSFER }
 
@@ -480,10 +480,8 @@ contract TestMemeTaxedToken is ERC20, Ownable {
         taxRecipient = _taxRecipient;
         treasuryAddress = _treasuryAddress;
 
-        // Mint the initial supply to the caller
         _mint(msg.sender, initialSupply * 10 ** decimals());
 
-        // Transfer ownership to the caller
         transferOwnership(msg.sender);
     }
 
@@ -502,10 +500,10 @@ contract TestMemeTaxedToken is ERC20, Ownable {
     ) internal virtual override {
         uint256 taxAmount;
         if (sender == owner()) {
-            // Exclude owner from buy tax
+
             taxAmount = (amount * buyTax) / 100;
         } else if (recipient == owner()) {
-            // Exclude owner from sell tax
+
             taxAmount = (amount * sellTax) / 100;
         } else {
             taxAmount = (amount * transferTax) / 100;
@@ -599,14 +597,12 @@ contract Launchpad {
         emit TreasuryAddressChanged(oldAddress, newTreasuryAddress);
     }
 
-    // View function to get token details by ID
     function getTokenDetailsById(uint256 id) external view returns (TokenDetails memory) {
         address tokenAddress = tokenById[id];
         require(tokenAddress != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
     }
 
-    // View function to get token details by address
     function getTokenDetailsByAddress(address tokenAddress) external view returns (TokenDetails memory) {
         require(deployedTokens[tokenAddress].owner != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
