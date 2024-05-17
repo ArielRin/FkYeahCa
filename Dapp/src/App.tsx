@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+import Launch from './Pages/Launch/Launchpad';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
@@ -28,24 +31,17 @@ import { useAccount, useContractRead, useContractWrite } from 'wagmi';
 function App() {
 
   return (
-    <>
-      <header>
-        <div className="connect-button">
-          <ConnectButton />
-        </div>
-      </header>
-
-      <div
-        className="wrapper"
-        style={{
-          backgroundColor: 'black',
-          color: 'white',
-          backgroundSize: 'cover',
-        }}
-      >
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/launch" element={<Launch />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
+
+
+// ***
