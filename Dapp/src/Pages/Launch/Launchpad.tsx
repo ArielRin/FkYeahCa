@@ -16,8 +16,8 @@ import {
 import launchpadAbi from './launchpadABI.json';
 
 
-import headerLogoImage from "./fkyeah.png";
-import mainbackgroundImage from "./madz.png";
+import headerLogoImage from "./madcontractsTextLogo.png";
+import mainbackgroundImage from "./madbkg.png";
 
 
 // this is the test one before chat decided chains to go on...
@@ -145,17 +145,23 @@ const LaunchPad: React.FC = () => {
         bgRepeat="no-repeat"
         bgSize="cover"
       >
-        <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
         <ConnectButton />
+        <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
-        <Box padding={4}>
-          <Text color="white" fontSize="2xl" mb={4} mt={4}>Welcome to FuckYeah Contracts ERC20 LaunchPad</Text>
+
+                <Container maxW="container.md" mt={10}>
+
+                  <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
+
+        <Box        padding={4}>
+          <Text color="white" fontSize="2xl" mb={4} mt={4}>Welcome to Mad Contracts ERC20 LaunchPad</Text>
           <Text color="white" fontSize="xl" mb={4}>Create your own Meme token with us. Choose up to 10% Buy/Sell taxes. Just pay the gas fees to deploy.</Text>
-          <Text color="white" fontSize="xl" mb={4}>We make it easy for you to launch with "FuckYeah Contracts"</Text>
+          <Text color="white" fontSize="xl" mb={4}>We make it easy for you to launch with "Mad Contracts"</Text>
           <Text color="white" fontSize="md" mb={4}>Small Transaction fee of 0.5% will be added to the tokenomics of your token as a deployer fee.</Text>
         </Box>
 
-
+        </Flex>
+      </Container>
         <Container maxW="container.md" mt={10}>
 
           <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
