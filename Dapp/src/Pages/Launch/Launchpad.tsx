@@ -1,4 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { BrowserRouter as Router, Link as RouterLink, useParams,  Routes, Route } from 'react-router-dom';
+
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import { ethers } from 'ethers';
@@ -176,6 +178,9 @@ const LaunchPad: React.FC = () => {
         <ConnectButton />
         <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
+                      <Box        padding={4}>
+                      <RouterLink style={{ color:'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
+                      </Box>
         <Container maxW="container.md" mt={10}>
           <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
             <Box padding={4}>

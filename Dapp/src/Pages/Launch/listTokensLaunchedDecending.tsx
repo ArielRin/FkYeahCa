@@ -5,6 +5,7 @@ import { contractAddresses } from './launchMemeContractAddresses';
 import { chainExplorerUrls } from './chainExplorerLinks';
 import launchpadAbi from './launchpadABI.json';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { BrowserRouter as Router, Link as RouterLink, useParams,  Routes, Route } from 'react-router-dom';
 
 
 import headerLogoImage from "./madcontractsTextLogo.png";
@@ -96,6 +97,11 @@ const LaunchPad: React.FC = () => {
     </Box>
             <ConnectButton />
             <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
+
+            <Box        padding={4}>
+            <RouterLink style={{ color:'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
+            </Box>
+
             <Box
               flex={1}
               p={0}
