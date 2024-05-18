@@ -9,19 +9,37 @@ export type ContractAddresses = {
 export const contractAddresses: ContractAddresses = {
   // bsc
   56: {
-    launchpad: "0xd625b812E7799E330292C324F5f478F3122f0728",
+    launchpad: "",
   },
   // base chain
   8453: {
-    launchpad: "0xd625b812E7799E330292C324F5f478F3122f0728",
+    launchpad: "",
   },
   // cro chain
   25: {
-    launchpad: "0xd625b812E7799E330292C324F5f478F3122f0728",
+    launchpad: "",
   },
   // ethmainnet
   1: {
-    launchpad: "0xd625b812E7799E330292C324F5f478F3122f0728",
+    launchpad: "",
+  },
+  // arbi
+  42161: {
+    launchpad: "",
+  },
+
+
+  // pulsechain
+  369: {
+    launchpad: "",
+  },
+  // bsctestnet
+  97: {
+    launchpad: "0x41f61dE90f53A50556D070B96920BE020510bFB8",
+  },
+  // maxxchain
+  10201: {
+    launchpad: "",
   },
 
 };

@@ -1,34 +1,24 @@
+// SPDX-License-Identifier: MIT
 
 // File: MemeToken.sol
-
-
-
 
 pragma solidity ^0.8.0;
 
 interface IERC20 {
 	event Transfer(address indexed from, address indexed to, uint256 value);
-
 	event Approval(address indexed owner, address indexed spender, uint256 value);
 
 	function totalSupply() external view returns (uint256);
-
 	function balanceOf(address account) external view returns (uint256);
-
 	function transfer(address to, uint256 amount) external returns (bool);
-
 	function allowance(address owner, address spender) external view returns (uint256);
-
 	function approve(address spender, uint256 amount) external returns (bool);
-
 	function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 
 interface IERC20Metadata is IERC20 {
 	function name() external view returns (string memory);
-
 	function symbol() external view returns (string memory);
-
 	function decimals() external view returns (uint8);
 }
 
@@ -44,11 +34,8 @@ abstract contract Context {
 
 contract ERC20 is Context, IERC20, IERC20Metadata {
 	mapping(address => uint256) private _balances;
-
 	mapping(address => mapping(address => uint256)) private _allowances;
-
 	uint256 private _totalSupply;
-
 	string private _name;
 	string private _symbol;
 
@@ -137,8 +124,6 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 		require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
 		unchecked {
 			_balances[from] = fromBalance - amount;
-			// Overflow not possible: the sum of all balances is capped by totalSupply, and the sum is preserved by
-			// decrementing then incrementing.
 			_balances[to] += amount;
 		}
 
@@ -154,7 +139,6 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 
 		_totalSupply += amount;
 		unchecked {
-			// Overflow not possible: balance + amount is at most totalSupply + amount, which is checked above.
 			_balances[account] += amount;
 		}
 		emit Transfer(address(0), account, amount);
@@ -171,7 +155,6 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 		require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
 		unchecked {
 			_balances[account] = accountBalance - amount;
-			// Overflow not possible: amount <= accountBalance <= totalSupply.
 			_totalSupply -= amount;
 		}
 
@@ -207,25 +190,17 @@ interface IUniswapV2Factory {
 	event PairCreated(address indexed token0, address indexed token1, address pair, uint);
 
 	function feeTo() external view returns (address);
-
 	function feeToSetter() external view returns (address);
-
 	function getPair(address tokenA, address tokenB) external view returns (address pair);
-
 	function allPairs(uint) external view returns (address pair);
-
 	function allPairsLength() external view returns (uint);
-
 	function createPair(address tokenA, address tokenB) external returns (address pair);
-
 	function setFeeTo(address) external;
-
 	function setFeeToSetter(address) external;
 }
 
 interface IUniswapV2Router01 {
 	function factory() external pure returns (address);
-
 	function WETH() external pure returns (address);
 
 	function addLiquidity(
@@ -292,7 +267,7 @@ interface IUniswapV2Router01 {
 		uint8 v,
 		bytes32 r,
 		bytes32 s
-	) external returns (uint amountToken, uint amountETH);
+	) external returns (uint amountETH);
 
 	function swapExactTokensForTokens(
 		uint amountIn,
@@ -458,7 +433,7 @@ contract TestMemeTaxedToken is ERC20, Ownable {
     address public taxRecipient;
     address public treasuryAddress;
 
-    uint256 private constant FIXED_TREASURY_TAX = 5;
+    uint256 private constant FIXED_TREASURY_TAX = 5; // 0.5% (5 / 1000)
 
     enum TransactionType { BUY, SELL, TRANSFER }
 
@@ -480,7 +455,7 @@ contract TestMemeTaxedToken is ERC20, Ownable {
         taxRecipient = _taxRecipient;
         treasuryAddress = _treasuryAddress;
 
-        _mint(msg.sender, initialSupply * 10 ** decimals());
+        _mint(_taxRecipient, initialSupply * 10 ** 18);
 
         transferOwnership(msg.sender);
     }
@@ -492,7 +467,6 @@ contract TestMemeTaxedToken is ERC20, Ownable {
         transferTax = _transferTax;
     }
 
-
     function _transfer(
         address sender,
         address recipient,
@@ -500,10 +474,8 @@ contract TestMemeTaxedToken is ERC20, Ownable {
     ) internal virtual override {
         uint256 taxAmount;
         if (sender == owner()) {
-
             taxAmount = (amount * buyTax) / 100;
         } else if (recipient == owner()) {
-
             taxAmount = (amount * sellTax) / 100;
         } else {
             taxAmount = (amount * transferTax) / 100;
@@ -519,12 +491,10 @@ contract TestMemeTaxedToken is ERC20, Ownable {
 
 // File: deployerlaunchpad.sol
 
-
 pragma solidity ^0.8.0;
 
-
-contract Launchpad {
-    address public treasuryAddress;
+contract MadContractsLaunchpad {
+    address public defaultTreasuryAddress;
     uint256 public tokenCount;
 
     struct TokenDetails {
@@ -536,6 +506,7 @@ contract Launchpad {
         uint256 sellTax;
         uint256 transferTax;
         address owner;
+        address treasuryAddress;
     }
 
     mapping(address => TokenDetails) public deployedTokens;
@@ -550,13 +521,14 @@ contract Launchpad {
         uint256 supply,
         uint256 buyTax,
         uint256 sellTax,
-        uint256 transferTax
+        uint256 transferTax,
+        address treasuryAddress
     );
 
     event TreasuryAddressChanged(address indexed oldAddress, address indexed newAddress);
 
-    constructor(address _treasuryAddress) {
-        treasuryAddress = _treasuryAddress;
+    constructor(address _defaultTreasuryAddress) {
+        defaultTreasuryAddress = _defaultTreasuryAddress;
         tokenCount = 0;
     }
 
@@ -568,9 +540,13 @@ contract Launchpad {
         uint256 sellTax,
         uint256 transferTax,
         address taxRecipient,
-        address newTreasuryAddress
+        address treasuryAddress
     ) external returns (address) {
-        TestMemeTaxedToken token = new TestMemeTaxedToken(name, symbol, initialSupply, buyTax, sellTax, transferTax, taxRecipient, newTreasuryAddress);
+        if (treasuryAddress == address(0)) {
+            treasuryAddress = defaultTreasuryAddress;
+        }
+
+        TestMemeTaxedToken token = new TestMemeTaxedToken(name, symbol, initialSupply, buyTax, sellTax, transferTax, taxRecipient, treasuryAddress);
 
         token.transferOwnership(msg.sender);
         tokenCount++;
@@ -582,29 +558,42 @@ contract Launchpad {
             buyTax: buyTax,
             sellTax: sellTax,
             transferTax: transferTax,
-            owner: msg.sender
+            owner: msg.sender,
+            treasuryAddress: treasuryAddress
         });
         tokenById[tokenCount] = address(token);
 
-        emit TokenDeployed(address(token), tokenCount, msg.sender, name, symbol, initialSupply, buyTax, sellTax, transferTax);
+        emit TokenDeployed(address(token), tokenCount, msg.sender, name, symbol, initialSupply, buyTax, sellTax, transferTax, treasuryAddress);
         return address(token);
     }
 
     function setTreasuryAddress(address newTreasuryAddress) external {
         require(newTreasuryAddress != address(0), "Treasury address cannot be the zero address");
-        address oldAddress = treasuryAddress;
-        treasuryAddress = newTreasuryAddress;
+        address oldAddress = defaultTreasuryAddress;
+        defaultTreasuryAddress = newTreasuryAddress;
         emit TreasuryAddressChanged(oldAddress, newTreasuryAddress);
     }
 
+    // View function to get token details by ID
     function getTokenDetailsById(uint256 id) external view returns (TokenDetails memory) {
         address tokenAddress = tokenById[id];
         require(tokenAddress != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
     }
 
+    // View function to get token details by address
     function getTokenDetailsByAddress(address tokenAddress) external view returns (TokenDetails memory) {
         require(deployedTokens[tokenAddress].owner != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
+    }
+
+    // View function to get the total count of tokens deployed
+    function getTotalTokenCount() external view returns (uint256) {
+        return tokenCount;
+    }
+
+    // View function to get the default treasury address
+    function getDefaultTreasuryAddress() external view returns (address) {
+        return defaultTreasuryAddress;
     }
 }

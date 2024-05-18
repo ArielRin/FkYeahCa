@@ -3,48 +3,12 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_deployerFee1",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_deployerFee2",
+				"name": "_treasuryAddress",
 				"type": "address"
 			}
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "oldDeployerFee1",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "oldDeployerFee2",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newDeployerFee1",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "newDeployerFee2",
-				"type": "address"
-			}
-		],
-		"name": "DeployerFeesChanged",
-		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -108,6 +72,25 @@
 		"type": "event"
 	},
 	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "oldAddress",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newAddress",
+				"type": "address"
+			}
+		],
+		"name": "TreasuryAddressChanged",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -142,6 +125,11 @@
 			{
 				"internalType": "address",
 				"name": "taxRecipient",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "newTreasuryAddress",
 				"type": "address"
 			}
 		],
@@ -211,32 +199,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "deployerFee1",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "deployerFee2",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -289,7 +251,7 @@
 						"type": "address"
 					}
 				],
-				"internalType": "struct MadContractsLaunchpad.TokenDetails",
+				"internalType": "struct Launchpad.TokenDetails",
 				"name": "",
 				"type": "tuple"
 			}
@@ -350,22 +312,9 @@
 						"type": "address"
 					}
 				],
-				"internalType": "struct MadContractsLaunchpad.TokenDetails",
+				"internalType": "struct Launchpad.TokenDetails",
 				"name": "",
 				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getTotalTokenCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -375,16 +324,11 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "newDeployerFee1",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "newDeployerFee2",
+				"name": "newTreasuryAddress",
 				"type": "address"
 			}
 		],
-		"name": "setDeployerFees",
+		"name": "setTreasuryAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -416,6 +360,19 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "treasuryAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",

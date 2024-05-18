@@ -27,10 +27,14 @@ import mainbackgroundImage from "./madbkg.png";
 
 import { contractAddresses, ContractAddresses } from './launchMemeContractAddresses';
 
+
+
+
 const LaunchPad: React.FC = () => {
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
-  const [treasuryAddress, setTreasuryAddress] = useState<string>('');
+  const [deployerFee1, setDeployerFee1] = useState<string>('');
+  const [deployerFee2, setDeployerFee2] = useState<string>('');
   const [account, setAccount] = useState<string>('');
   const [chainId, setChainId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
@@ -70,8 +74,11 @@ const LaunchPad: React.FC = () => {
 
         const contractInstance = new ethers.Contract(launchpadAddress, launchpadAbi, signer);
         setContract(contractInstance);
-        const treasury = await contractInstance.treasuryAddress();
-        setTreasuryAddress(treasury);
+
+        const deployerFee1 = await contractInstance.deployerFee1();
+        const deployerFee2 = await contractInstance.deployerFee2();
+        setDeployerFee1(deployerFee1);
+        setDeployerFee2(deployerFee2);
       } else {
         toast({
           title: "No EVM provider detected",
@@ -97,27 +104,41 @@ const LaunchPad: React.FC = () => {
   const deployToken = async () => {
     if (contract) {
       try {
+        const initialSupply = ethers.utils.parseUnits(formData.initialSupply, 18);
+        const buyTax = ethers.BigNumber.from(formData.buyTax);
+        const sellTax = ethers.BigNumber.from(formData.sellTax);
+        const transferTax = ethers.BigNumber.from(formData.transferTax);
+
         const tx = await contract.deployMemeToken(
           formData.name,
           formData.symbol,
-          ethers.utils.parseUnits(formData.initialSupply, 18),
-          formData.buyTax,
-          formData.sellTax,
-          formData.transferTax,
-          account,
-          treasuryAddress
+          initialSupply,
+          buyTax,
+          sellTax,
+          transferTax,
+          account
         );
-        await tx.wait();
+
+        const receipt = await tx.wait();
+
         toast({
           title: "Token deployed successfully",
-          description: `Token deployed at address: ${tx.to}`,
+          description: `Token deployed at address: ${receipt.to}`,
           status: "success",
           duration: 9000,
           isClosable: true,
         });
       } catch (error) {
-        const errorMessage = (error as Error).message;
-        console.error("Error deploying token:", errorMessage);
+        console.error("Error deploying token:", error);
+
+        // Handle more specific errors if possible
+        let errorMessage = (error as Error).message;
+        if ((error as any).data?.message) {
+          errorMessage = (error as any).data.message;
+        } else if ((error as any).error?.message) {
+          errorMessage = (error as any).error.message;
+        }
+
         toast({
           title: "Error deploying token",
           description: errorMessage,
@@ -129,24 +150,20 @@ const LaunchPad: React.FC = () => {
     }
   };
 
-
   return (
-
-          <Box>
-        <Box
-          flex={1}
-          p={0}
-          m={0}
-          display="flex"
-          flexDirection="column"
-          bg="rgba(0, 0, 0, 1)"
-
-          bgImage={`url(${mainbackgroundImage})`}
-          bgPosition="center"
-          bgRepeat="no-repeat"
-          bgSize="cover"
-        >
-
+    <Box>
+      <Box
+        flex={1}
+        p={0}
+        m={0}
+        display="flex"
+        flexDirection="column"
+        bg="rgba(0, 0, 0, 1)"
+        bgImage={`url(${mainbackgroundImage})`}
+        bgPosition="center"
+        bgRepeat="no-repeat"
+        bgSize="cover"
+      >
         <Box
           flex={1}
           p={0}
@@ -157,29 +174,23 @@ const LaunchPad: React.FC = () => {
           marginTop="50px"
         >
         </Box>
-                <ConnectButton />
-                <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
+        <ConnectButton />
+        <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
-
-                <Container maxW="container.md" mt={10}>
-
-                  <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
-
-        <Box        padding={4}>
-          <Text color="white" fontSize="2xl" mb={4} mt={4}>Welcome to Mad Contracts ERC20 LaunchPad</Text>
-          <Text color="white" fontSize="xl" mb={4}>Create your own Meme token with us. Choose up to 10% Buy/Sell taxes. Just pay the gas fees to deploy.</Text>
-          <Text color="white" fontSize="xl" mb={4}>We make it easy for you to launch with "Mad Contracts"</Text>
-          <Text color="white" fontSize="md" mb={4}>Small Transaction fee of 0.5% will be added to the tokenomics of your token as a deployer fee.</Text>
-        </Box>
-
-        </Flex>
-      </Container>
         <Container maxW="container.md" mt={10}>
-
           <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
+            <Box padding={4}>
+              <Text color="white" fontSize="2xl" mb={4} mt={4}>Welcome to Mad Contracts ERC20 LaunchPad</Text>
+              <Text color="white" fontSize="xl" mb={4}>Create your own Meme token with us. Choose up to 10% Buy/Sell taxes. Just pay the gas fees to deploy.</Text>
+              <Text color="white" fontSize="xl" mb={4}>We make it easy for you to launch with "Mad Contracts"</Text>
+              <Text color="white" fontSize="md" mb={4}>Small Transaction fee of 0.5% will be added to the tokenomics of your token as a deployer fee.</Text>
+            </Box>
+          </Flex>
+        </Container>
 
-        <Text fontSize="2xl" mb={4}>Deploy Your Own Meme Token</Text>
-
+        <Container maxW="container.md" mt={10}>
+          <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
+            <Text fontSize="2xl" mb={4}>Deploy Your Own Meme Token</Text>
             <Input
               placeholder="Name"
               name="name"
@@ -212,36 +223,36 @@ const LaunchPad: React.FC = () => {
               onChange={handleInputChange}
               mb={3}
             />
-              <Input
-                placeholder="Sell Tax"
-                name="sellTax"
-                color="white"
-                value={formData.sellTax}
-                onChange={handleInputChange}
-                mb={3}
-                />
-              <Input
-                placeholder="Transfer Tax"
-                name="transferTax"
-                color="white"
-                value={formData.transferTax}
-                onChange={handleInputChange}
-                mb={3}
-              />
+            <Input
+              placeholder="Sell Tax"
+              name="sellTax"
+              color="white"
+              value={formData.sellTax}
+              onChange={handleInputChange}
+              mb={3}
+            />
+            <Input
+              placeholder="Transfer Tax"
+              name="transferTax"
+              color="white"
+              value={formData.transferTax}
+              onChange={handleInputChange}
+              mb={3}
+            />
             <Button colorScheme="blue" onClick={deployToken}>Deploy Token</Button>
           </Flex>
         </Container>
 
-                    <Box
-                      flex={1}
-                      p={0}
-                      m={0}
-                      display="flex"
-                      flexDirection="column"
-                      bg="rgba(0, 0, 0, 0)"
-                      marginBottom="250px"
-                    >
-                    </Box>
+        <Box
+          flex={1}
+          p={0}
+          m={0}
+          display="flex"
+          flexDirection="column"
+          bg="rgba(0, 0, 0, 0)"
+          marginBottom="250px"
+        >
+        </Box>
       </Box>
     </Box>
   );
