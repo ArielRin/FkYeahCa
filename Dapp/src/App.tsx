@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import Launch from './Pages/Launch/Launchpad';
+import List from './Pages/Launch/listTokensLaunchedDecending';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/launch" element={<Launch />} />
+        <Route path="/list" element={<List />} />
       </Routes>
     </Router>
   );
