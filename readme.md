@@ -1,4 +1,4 @@
-# Fk Yeah Contractss Token LaunchPad Dapp
+# Mad Contracts Token LaunchPad Dapp Example
 
 Development Page https://startling-klepon-fca51b.netlify.app/
 
