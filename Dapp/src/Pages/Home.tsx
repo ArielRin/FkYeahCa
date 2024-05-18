@@ -30,11 +30,20 @@ function App() {
 
   return (
     <>
-      <header>
-        <div className="connect-button">
-          <ConnectButton />
-        </div>
-      </header>
+
+      <Box
+        flex={1}
+        p={0}
+        m={0}
+        display="flex"
+        flexDirection="column"
+        bg="rgba(0, 0, 0, 0)"
+        marginTop="50px"
+      >
+      </Box>
+
+      <ConnectButton />
+
 
       <Text fontSize="2xl" mb={4}>Some shit hot front page or just have launch here</Text>
 

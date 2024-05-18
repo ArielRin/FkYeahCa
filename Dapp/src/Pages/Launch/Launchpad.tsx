@@ -145,6 +145,18 @@ const LaunchPad: React.FC = () => {
         bgRepeat="no-repeat"
         bgSize="cover"
       >
+
+      <Box
+        flex={1}
+        p={0}
+        m={0}
+        display="flex"
+        flexDirection="column"
+        bg="rgba(0, 0, 0, 0)"
+        marginTop="50px"
+      >
+      </Box>
+
         <ConnectButton />
         <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 

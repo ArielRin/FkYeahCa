@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { Box, Text, Container, List, ListItem, Flex, Link } from '@chakra-ui/react';
+import { Box, Text, Image, Container, List, ListItem, Flex, Link } from '@chakra-ui/react';
 import { contractAddresses } from './launchMemeContractAddresses';
 import { chainExplorerUrls } from './chainExplorerLinks';
 import launchpadAbi from './launchpadABI.json';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+
+import headerLogoImage from "./madcontractsTextLogo.png";
+import mainbackgroundImage from "./madbkg.png";
+
 
 const LaunchPad: React.FC = () => {
   const [tokens, setTokens] = useState<any[]>([]);
@@ -28,7 +34,7 @@ const LaunchPad: React.FC = () => {
 
         try {
           const tokensList = [];
-          const totalTokens = 20;
+          const totalTokens = 10;
 
           for (let i = totalTokens - 1; i >= 0; i--) {
             try {
@@ -62,19 +68,57 @@ const LaunchPad: React.FC = () => {
   }
 
   return (
-    <Container maxW="70%">
+
+      <Box>
+    <Box
+      flex={1}
+      p={0}
+      m={0}
+      display="flex"
+      flexDirection="column"
+      bg="rgba(0, 0, 0, 1)"
+
+      bgImage={`url(${mainbackgroundImage})`}
+      bgPosition="center"
+      bgRepeat="no-repeat"
+      bgSize="cover"
+    >
+
+    <Box
+      flex={1}
+      p={0}
+      m={0}
+      display="flex"
+      flexDirection="column"
+      bg="rgba(0, 0, 0, 0)"
+      marginTop="50px"
+    >
+    </Box>
+            <ConnectButton />
+            <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
+            <Box
+              flex={1}
+              p={0}
+              m={0}
+              display="flex"
+              flexDirection="column"
+              bg="rgba(0, 0, 0, 0)"
+              marginBottom="100px"
+            >
+            </Box>
+    <Container
+    bg="rgba(0, 0, 0, 0.7)" marginBottom="200px" color="white" >
       <Text fontSize="2xl" mb={4}>Latest Deployed with Mad Contracts</Text>
       <Flex justify="space-between" mb={2} fontWeight="bold">
-        <Text flex="1">Name</Text>
+
         <Text flex="1">Symbol</Text>
         <Text flex="2">Address</Text>
-        <Text flex="1">Initial Supply</Text>
       </Flex>
       <List spacing={3}>
         {tokens.map((token, index) => (
-          <ListItem key={index} border="1px solid" borderColor="gray.200" p={3} borderRadius="md">
+          <ListItem key={index}  p={3} >
             <Flex justify="space-between">
-              <Text flex="1">{token.name}</Text>
+
               <Text flex="1">{token.symbol}</Text>
               <Text flex="2">
                 {explorerUrl ? (
@@ -85,12 +129,26 @@ const LaunchPad: React.FC = () => {
                   token.address
                 )}
               </Text>
-              <Text flex="1">{token.initialSupply}</Text>
             </Flex>
           </ListItem>
         ))}
       </List>
+
     </Container>
+
+    <Box
+      flex={1}
+      p={0}
+      m={0}
+      display="flex"
+      flexDirection="column"
+      bg="rgba(0, 0, 0, 0)"
+      marginBottom="400px"
+    >
+    </Box>
+    </Box>
+
+      </Box>
   );
 };
 
