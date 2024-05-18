@@ -23,7 +23,9 @@ import mainbackgroundImage from "./madz.png";
 // this is the test one before chat decided chains to go on...
 // const LAUNCHPAD_CONTRACT_ADDRESS = "0xd625b812E7799E330292C324F5f478F3122f0728";
 // end test ca now use external code with contract fr the chain on.
-import { contractAddresses } from './launchMemeContractAddresses';
+// import { contractAddresses } from './launchMemeContractAddresses';
+
+import { contractAddresses, ContractAddresses } from './launchMemeContractAddresses';
 
 const LaunchPad: React.FC = () => {
   const [web3, setWeb3] = useState<Web3 | null>(null);
@@ -54,7 +56,7 @@ const LaunchPad: React.FC = () => {
         const network = await provider.getNetwork();
         setChainId(network.chainId);
 
-        const launchpadAddress = contractAddresses[network.chainId]?.launchpad;
+        const launchpadAddress = (contractAddresses as ContractAddresses)[network.chainId]?.launchpad;
         if (!launchpadAddress) {
           toast({
             title: "Unsupported network",
@@ -72,8 +74,8 @@ const LaunchPad: React.FC = () => {
         setTreasuryAddress(treasury);
       } else {
         toast({
-          title: "No Ethereum provider detected",
-          description: "Please install MetaMask or another wallet extension.",
+          title: "No EVM provider detected",
+          description: "Please install MetaMask, use injected or another wallet extension.",
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -102,7 +104,7 @@ const LaunchPad: React.FC = () => {
           formData.buyTax,
           formData.sellTax,
           formData.transferTax,
-          account, // Tax recipient is the connected wallet
+          account,
           treasuryAddress
         );
         await tx.wait();
@@ -114,7 +116,7 @@ const LaunchPad: React.FC = () => {
           isClosable: true,
         });
       } catch (error) {
-        const errorMessage = (error as Error).message; // Type assertion
+        const errorMessage = (error as Error).message;
         console.error("Error deploying token:", errorMessage);
         toast({
           title: "Error deploying token",
@@ -126,6 +128,7 @@ const LaunchPad: React.FC = () => {
       }
     }
   };
+
 
   return (
     <Box>
