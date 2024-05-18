@@ -102,7 +102,7 @@ function App() {
               display="flex"
               flexDirection="column"
               bg="rgba(0, 0, 0, 0)"
-              marginBottom="450px"
+              marginBottom="550px"
             >
             </Box>
     </Box>
