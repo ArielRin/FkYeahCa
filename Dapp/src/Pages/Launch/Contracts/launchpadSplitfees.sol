@@ -434,7 +434,7 @@ contract TestMemeTaxedToken is ERC20, Ownable {
     address public deployerFee1;
     address public deployerFee2;
 
-    uint256 private constant FIXED_DEPLOYER_FEE = 25; // 0.25% (25 / 10000)
+    uint256 private constant FIXED_DEPLOYER_FEE = 25;
 
     enum TransactionType { BUY, SELL, TRANSFER }
 
@@ -574,20 +574,17 @@ contract MadContractsLaunchpad {
         emit DeployerFeesChanged(oldDeployerFee1, oldDeployerFee2, newDeployerFee1, newDeployerFee2);
     }
 
-    // View function to get token details by ID
     function getTokenDetailsById(uint256 id) external view returns (TokenDetails memory) {
         address tokenAddress = tokenById[id];
         require(tokenAddress != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
     }
 
-    // View function to get token details by address
     function getTokenDetailsByAddress(address tokenAddress) external view returns (TokenDetails memory) {
         require(deployedTokens[tokenAddress].owner != address(0), "Token does not exist.");
         return deployedTokens[tokenAddress];
     }
 
-    // View function to get the total count of tokens deployed
     function getTotalTokenCount() external view returns (uint256) {
         return tokenCount;
     }
