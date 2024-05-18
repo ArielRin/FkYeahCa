@@ -131,34 +131,34 @@ const LaunchPad: React.FC = () => {
 
 
   return (
-    <Box>
-      <Box
-        flex={1}
-        p={0}
-        m={0}
-        display="flex"
-        flexDirection="column"
-        bg="rgba(0, 0, 0, 1)"
 
-        bgImage={`url(${mainbackgroundImage})`}
-        bgPosition="center"
-        bgRepeat="no-repeat"
-        bgSize="cover"
-      >
+          <Box>
+        <Box
+          flex={1}
+          p={0}
+          m={0}
+          display="flex"
+          flexDirection="column"
+          bg="rgba(0, 0, 0, 1)"
 
-      <Box
-        flex={1}
-        p={0}
-        m={0}
-        display="flex"
-        flexDirection="column"
-        bg="rgba(0, 0, 0, 0)"
-        marginTop="50px"
-      >
-      </Box>
+          bgImage={`url(${mainbackgroundImage})`}
+          bgPosition="center"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+        >
 
-        <ConnectButton />
-        <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
+        <Box
+          flex={1}
+          p={0}
+          m={0}
+          display="flex"
+          flexDirection="column"
+          bg="rgba(0, 0, 0, 0)"
+          marginTop="50px"
+        >
+        </Box>
+                <ConnectButton />
+                <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
 
                 <Container maxW="container.md" mt={10}>
@@ -231,6 +231,17 @@ const LaunchPad: React.FC = () => {
             <Button colorScheme="blue" onClick={deployToken}>Deploy Token</Button>
           </Flex>
         </Container>
+
+                    <Box
+                      flex={1}
+                      p={0}
+                      m={0}
+                      display="flex"
+                      flexDirection="column"
+                      bg="rgba(0, 0, 0, 0)"
+                      marginBottom="250px"
+                    >
+                    </Box>
       </Box>
     </Box>
   );
