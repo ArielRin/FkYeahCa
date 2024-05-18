@@ -131,7 +131,6 @@ const LaunchPad: React.FC = () => {
       } catch (error) {
         console.error("Error deploying token:", error);
 
-        // Handle more specific errors if possible
         let errorMessage = (error as Error).message;
         if ((error as any).data?.message) {
           errorMessage = (error as any).data.message;

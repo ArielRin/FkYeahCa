@@ -27,8 +27,6 @@ export const contractAddresses: ContractAddresses = {
   42161: {
     launchpad: "",
   },
-
-
   // pulsechain
   369: {
     launchpad: "",
