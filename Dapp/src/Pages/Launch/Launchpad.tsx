@@ -15,18 +15,22 @@ import {
 
 import launchpadAbi from './launchpadABI.json';
 
-// import HeaderWithDropdown from './Components/HeaderWithDropdown/HeaderWithDropdown';
 
 import headerLogoImage from "./fkyeah.png";
 import mainbackgroundImage from "./madz.png";
 
-const LAUNCHPAD_CONTRACT_ADDRESS = "0xd625b812E7799E330292C324F5f478F3122f0728";
+
+// this is the test one before chat decided chains to go on...
+// const LAUNCHPAD_CONTRACT_ADDRESS = "0xd625b812E7799E330292C324F5f478F3122f0728";
+// end test ca now use external code with contract fr the chain on.
+import { contractAddresses } from './launchMemeContractAddresses';
 
 const LaunchPad: React.FC = () => {
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [treasuryAddress, setTreasuryAddress] = useState<string>('');
   const [account, setAccount] = useState<string>('');
+  const [chainId, setChainId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     symbol: '',
@@ -46,7 +50,23 @@ const LaunchPad: React.FC = () => {
         const signer = provider.getSigner();
         const accounts = await provider.listAccounts();
         setAccount(accounts[0]);
-        const contractInstance = new ethers.Contract(LAUNCHPAD_CONTRACT_ADDRESS, launchpadAbi, signer);
+
+        const network = await provider.getNetwork();
+        setChainId(network.chainId);
+
+        const launchpadAddress = contractAddresses[network.chainId]?.launchpad;
+        if (!launchpadAddress) {
+          toast({
+            title: "Unsupported network",
+            description: "Please connect to a supported network.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          return;
+        }
+
+        const contractInstance = new ethers.Contract(launchpadAddress, launchpadAbi, signer);
         setContract(contractInstance);
         const treasury = await contractInstance.treasuryAddress();
         setTreasuryAddress(treasury);
@@ -72,44 +92,41 @@ const LaunchPad: React.FC = () => {
     }));
   };
 
-
-
-    const deployToken = async () => {
-      if (contract) {
-        try {
-          const tx = await contract.deployMemeToken(
-            formData.name,
-            formData.symbol,
-            ethers.utils.parseUnits(formData.initialSupply, 18),
-            formData.buyTax,
-            formData.sellTax,
-            formData.transferTax,
-            account, // Tax recipient is the connected wallet
-            treasuryAddress
-          );
-          await tx.wait();
-          toast({
-            title: "Token deployed successfully",
-            description: `Token deployed at address: ${tx.to}`,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          });
-        } catch (error) {
-          const errorMessage = (error as Error).message; // Type assertion
-          console.error("Error deploying token:", errorMessage);
-          toast({
-            title: "Error deploying token",
-            description: errorMessage,
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        }
+  const deployToken = async () => {
+    if (contract) {
+      try {
+        const tx = await contract.deployMemeToken(
+          formData.name,
+          formData.symbol,
+          ethers.utils.parseUnits(formData.initialSupply, 18),
+          formData.buyTax,
+          formData.sellTax,
+          formData.transferTax,
+          account, // Tax recipient is the connected wallet
+          treasuryAddress
+        );
+        await tx.wait();
+        toast({
+          title: "Token deployed successfully",
+          description: `Token deployed at address: ${tx.to}`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } catch (error) {
+        const errorMessage = (error as Error).message; // Type assertion
+        console.error("Error deploying token:", errorMessage);
+        toast({
+          title: "Error deploying token",
+          description: errorMessage,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
-    };
+    }
+  };
 
-    
   return (
     <Box>
       <Box
