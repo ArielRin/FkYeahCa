@@ -1,5 +1,11 @@
 # Mad Contracts Token LaunchPad Dapp Example
 
+## Reason for the project Collaboration
+
+
+
+
+![Reason](https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/bored.gif)
 
 ## Initial idea of the project
 
@@ -7,7 +13,7 @@
 
 ## Desired Outcome
 
-![Initial idea of the project](https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/outcome.gif)
+![Desired Outcome](https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/outcome.gif)
 
 
 ## Testing
