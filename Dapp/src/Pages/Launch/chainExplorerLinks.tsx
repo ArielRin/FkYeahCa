@@ -7,6 +7,7 @@ export const chainExplorerUrls: { [key: number]: string } = {
   97: "https://testnet.bscscan.com/address/",
   42161: "https://arbiscan.io/address/",
   10201: "https://scan.maxxchain.org/address/",
+  11155111: "https://sepolia.etherscan.io/address/",
 
 
 };

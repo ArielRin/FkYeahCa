@@ -37,7 +37,13 @@ export const contractAddresses: ContractAddresses = {
   },
   // maxxchain
   10201: {
-    launchpad: "",
+    launchpad: "0x0b8f852C1Fa31B40C3a777F06CACdCc88fA6Bdb8",
   },
+  // seppolia
+  11155111: {
+    launchpad: "0xD75D719ed6FD7722a6113aC2Fede3158eb72e794",
+  },
+
+
 
 };

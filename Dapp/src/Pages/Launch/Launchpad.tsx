@@ -12,12 +12,23 @@ import {
   Flex,
   Container,
   Image,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderMark,
 } from "@chakra-ui/react";
+
 import launchpadAbi from './launchpadABI.json';
 import headerLogoImage from "./madcontractsTextLogo.png";
 import mainbackgroundImage from "./madbkg.png";
 import { contractAddresses, ContractAddresses } from './launchMemeContractAddresses';
 import { networkInfo } from './networks';
+
+
+
+
+
 
 const LaunchPad: React.FC = () => {
   const [web3, setWeb3] = useState<Web3 | null>(null);
@@ -30,9 +41,9 @@ const LaunchPad: React.FC = () => {
     name: '',
     symbol: '',
     initialSupply: '',
-    buyTax: '',
-    sellTax: '',
-    transferTax: '',
+    buyTax: 0,
+    sellTax: 0,
+    transferTax: 0,
   });
   const toast = useToast();
 
@@ -108,6 +119,13 @@ const LaunchPad: React.FC = () => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleSliderChange = (value: number, field: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
     }));
   };
 
@@ -207,18 +225,16 @@ const LaunchPad: React.FC = () => {
           <ConnectButton />
           <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
-
           <Container maxW="container.md" mt={10}>
             <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="xl" boxShadow="xl">
               <Box padding={4}>
-                <RouterLink style={{ color: 'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
+                <RouterLink style={{ color: 'white', fontWeight: 'bold' }} to="/">Back to Home</RouterLink>
               </Box>
               <Box padding={4}>
-                <RouterLink style={{ fontWeight: 'bold' }} to="/list"> Deployed Tokens List</RouterLink>
+                <RouterLink style={{ fontWeight: 'bold' }} to="/list">Deployed Tokens List</RouterLink>
               </Box>
             </Flex>
           </Container>
-          
 
           {network && (
             <Container maxW="container.md" mt={10}>
@@ -237,6 +253,8 @@ const LaunchPad: React.FC = () => {
           <Container maxW="container.md" mt={10}>
             <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="xl" boxShadow="xl">
               <Text fontSize="2xl" mb={4}>Deploy Your Own Meme Token</Text>
+
+              <Text mb={2}>Token Name</Text>
               <Input
                 placeholder="Name"
                 name="name"
@@ -245,6 +263,7 @@ const LaunchPad: React.FC = () => {
                 onChange={handleInputChange}
                 mb={3}
               />
+              <Text mb={2}>Token Symbol</Text>
               <Input
                 placeholder="Symbol"
                 name="symbol"
@@ -253,6 +272,7 @@ const LaunchPad: React.FC = () => {
                 onChange={handleInputChange}
                 mb={3}
               />
+              <Text mb={2}>Token Total Supply</Text>
               <Input
                 placeholder="Initial Supply"
                 name="initialSupply"
@@ -261,30 +281,61 @@ const LaunchPad: React.FC = () => {
                 onChange={handleInputChange}
                 mb={3}
               />
-              <Input
-                placeholder="Buy Tax"
-                name="buyTax"
-                color="white"
-                value={formData.buyTax}
-                onChange={handleInputChange}
-                mb={3}
-              />
-              <Input
-                placeholder="Sell Tax"
-                name="sellTax"
-                color="white"
-                value={formData.sellTax}
-                onChange={handleInputChange}
-                mb={3}
-              />
-              <Input
-                placeholder="Transfer Tax"
-                name="transferTax"
-                color="white"
-                value={formData.transferTax}
-                onChange={handleInputChange}
-                mb={3}
-              />
+
+              <Box mb={4}>
+                <Text mb={2}>Buy Tax: {formData.buyTax}%</Text>
+                <Slider
+                  defaultValue={formData.buyTax}
+                  min={0}
+                  max={9.5}
+                  step={1}
+                  onChange={(val) => handleSliderChange(val, 'buyTax')}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb boxSize={6}>
+                    <Box color="tomato" />
+                  </SliderThumb>
+                </Slider>
+              </Box>
+
+              <Box mb={4}>
+                <Text mb={2}>Sell Tax: {formData.sellTax}%</Text>
+                <Slider
+                  defaultValue={formData.sellTax}
+                  min={0}
+                  max={9.5}
+                  step={1}
+                  onChange={(val) => handleSliderChange(val, 'sellTax')}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb boxSize={6}>
+                    <Box color="tomato" />
+                  </SliderThumb>
+                </Slider>
+              </Box>
+
+              <Box mb={4}>
+                <Text mb={2}>Transfer Tax: {formData.transferTax}%</Text>
+                <Slider
+                  defaultValue={formData.transferTax}
+                  min={0}
+                  max={9.5}
+                  step={1}
+                  onChange={(val) => handleSliderChange(val, 'transferTax')}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb boxSize={6}>
+                    <Box color="tomato" />
+                  </SliderThumb>
+                </Slider>
+              </Box>
+
               <Button colorScheme="blue" onClick={deployToken}>Deploy Token</Button>
             </Flex>
           </Container>

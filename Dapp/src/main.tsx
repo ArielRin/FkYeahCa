@@ -172,9 +172,29 @@ const maxxChain: Chain = {
   testnet: false,
 };
 
+const sepolia: Chain = {
+  id: 11155111,
+  name: 'Sepolia Testnet',
+  network: 'sepolia',
+  iconBackground: '#000',
+  iconUrl: 'https://tokens.pancakeswap.finance/images/0x2170Ed0880ac9A755fd29B2688956BD959F933F8.png',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'ETH',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: 'https://sepolia.infura.io/v3/',
+  },
+  blockExplorers: {
+    default: { name: 'Etherscan Sepolia', url: 'https://sepolia.etherscan.io/' },
+  },
+  testnet: false,
+};
+
 
 const { chains, provider } = configureChains(
-  [bsc, base, arbitrum, maxxChain, pulse, cronos, mainnet, bsctestnet],
+  [ mainnet, bsc, base, cronos, arbitrum, pulse, maxxChain, bsctestnet, sepolia],
   [
     jsonRpcProvider({
       rpc: (chain) => {
@@ -186,6 +206,7 @@ const { chains, provider } = configureChains(
         if (chain.id === cronos.id) return { http: "https://evm.cronos.org/" };
         if (chain.id === mainnet.id) return { http: "https://mainnet.infura.io/v3/" };
         if (chain.id === bsctestnet.id) return { http: "https://data-seed-prebsc-1-s3.binance.org:8545/" };
+        if (chain.id === sepolia.id) return { http: "https://sepolia.infura.io/v3/" };
         return { http: chain.rpcUrls.default };
       },
     }),
