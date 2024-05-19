@@ -91,6 +91,18 @@ const LaunchPad: React.FC = () => {
       m={0}
       display="flex"
       flexDirection="column"
+      bg="rgba(0, 0, 0, 0.5)"
+      bgPosition="center"
+      bgRepeat="no-repeat"
+      bgSize="cover"
+    >
+
+    <Box
+      flex={1}
+      p={0}
+      m={0}
+      display="flex"
+      flexDirection="column"
       bg="rgba(0, 0, 0, 0)"
       marginTop="50px"
     >
@@ -98,9 +110,14 @@ const LaunchPad: React.FC = () => {
             <ConnectButton />
             <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
-            <Box        padding={4}>
-            <RouterLink style={{ color:'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
-            </Box>
+
+            <Container maxW="container.md" mt={10}>
+              <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="xl" boxShadow="xl">
+                <Box padding={4}>
+                  <RouterLink style={{ color:'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
+                </Box>
+              </Flex>
+            </Container>
 
             <Box
               flex={1}
@@ -113,7 +130,7 @@ const LaunchPad: React.FC = () => {
             >
             </Box>
     <Container
-    bg="rgba(0, 0, 0, 0.7)" marginBottom="200px" color="white" >
+    bg="rgba(0, 0, 0, 0.7)" marginBottom="200px" color="white" borderRadius="xl" boxShadow="xl">
       <Text fontSize="2xl" mb={4}>Latest Deployed with Mad Contracts</Text>
       <Flex justify="space-between" mb={2} fontWeight="bold">
 
@@ -151,6 +168,7 @@ const LaunchPad: React.FC = () => {
       bg="rgba(0, 0, 0, 0)"
       marginBottom="400px"
     >
+    </Box>
     </Box>
     </Box>
 
