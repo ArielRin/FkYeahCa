@@ -1,5 +1,8 @@
 # Mad Contracts Token LaunchPad Dapp Collaboration
 
+![Header](https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/Dapp/src/Pages/Launch/madcontractsTextLogo.png
+)
+
 ## Reason for the Project Collaboration
 
 ![Reason](https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/bored.gif)
