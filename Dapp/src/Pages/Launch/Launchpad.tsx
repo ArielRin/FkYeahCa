@@ -207,13 +207,18 @@ const LaunchPad: React.FC = () => {
           <ConnectButton />
           <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
+
           <Container maxW="container.md" mt={10}>
             <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="xl" boxShadow="xl">
               <Box padding={4}>
                 <RouterLink style={{ color: 'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
               </Box>
+              <Box padding={4}>
+                <RouterLink style={{ fontWeight: 'bold' }} to="/list"> Deployed Tokens List</RouterLink>
+              </Box>
             </Flex>
           </Container>
+          
 
           {network && (
             <Container maxW="container.md" mt={10}>

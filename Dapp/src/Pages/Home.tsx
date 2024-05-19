@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Link as RouterLink, useParams,  Routes, Route } from 'react-router-dom';
-
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import {
@@ -83,20 +82,21 @@ function App() {
           marginTop="50px"
         >
         </Box>
+        <Container  maxW="200px" mt={10}>
+          <Flex color="white" direction="column"  p={0} bg="rgba(0, 0, 0, 0.6)" borderRadius="0px" boxShadow="0px">
 
-          <Container  maxW="container.md" mt={10}>
+            <Button
+              as={RouterLink}
+              to="/launch"
+              colorScheme="grey.400"
+              fontWeight="bold"
+              >
+              Enter Dapp
+            </Button>
 
-            <Flex color="white" direction="column"  p={2} bg="rgba(0, 0, 0, 0.6)" borderRadius="md" boxShadow="md">
+          </Flex>
+       </Container>
 
-              <Box        padding={4}>
-              <RouterLink style={{ fontWeight: 'bold' }} to="/launch"> Go to LaunchPad</RouterLink>
-              </Box>
-              <Box        padding={4}>
-              <RouterLink style={{ fontWeight: 'bold' }} to="/list"> Deployed Tokens List</RouterLink>
-
-              </Box>
-            </Flex>
-         </Container>
       <div
         className="wrapper"
         style={{

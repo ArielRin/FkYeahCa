@@ -107,14 +107,21 @@ const LaunchPad: React.FC = () => {
       marginTop="50px"
     >
     </Box>
-            <ConnectButton />
-            <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
+
+
+    <ConnectButton />
+
+
+    <Image src={headerLogoImage} alt="Header Logo" width="75%" margin="0 auto" display="block" mt={4} />
 
 
             <Container maxW="container.md" mt={10}>
               <Flex color="white" direction="column" p={5} bg="rgba(0, 0, 0, 0.6)" borderRadius="xl" boxShadow="xl">
                 <Box padding={4}>
                   <RouterLink style={{ color:'white', fontWeight: 'bold' }} to="/"> Back to Home</RouterLink>
+                </Box>
+                <Box padding={4}>
+                  <RouterLink style={{ fontWeight: 'bold' }} to="/launch"> Go to LaunchPad</RouterLink>
                 </Box>
               </Flex>
             </Container>
@@ -129,6 +136,8 @@ const LaunchPad: React.FC = () => {
               marginBottom="100px"
             >
             </Box>
+
+            
     <Container
     bg="rgba(0, 0, 0, 0.7)" marginBottom="200px" color="white" borderRadius="xl" boxShadow="xl">
       <Text fontSize="2xl" mb={4}>Latest Deployed with Mad Contracts</Text>
