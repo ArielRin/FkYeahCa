@@ -1,18 +1,59 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mad Contracts</title>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/src/images/pangeatoken.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Contracts 2024</title>
+    <meta name="description" content="Mad Contracts Multichain LaunchPad 2024">
 
-     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:description" content="Mad Contracts" />
-    <meta name="description" content="Mad Contracts" />
-  </head>
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://startling-klepon-fca51b.netlify.app/">
+    <meta property="og:title" content="Mad Contracts 2024">
+    <meta property="og:description" content="Mad Contracts Multichain LaunchPad 2024" >
+    <meta property="og:image" content="https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/twitter.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://startling-klepon-fca51b.netlify.app/">
+    <meta name="twitter:title" content="Mad Contracts 2024">
+    <meta name="twitter:description" content="Mad Contracts Multichain LaunchPad 2024" >
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/twitter.png">
+</head>
   <body>
+    <!-- Loading Screen Div with Black Background -->
+    <div id="loading" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; opacity: 1; transition: opacity 1s; z-index: 9999;">
+  <div style="width: 30%; height: 53%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <img src="https://raw.githubusercontent.com/ArielRin/MericaFkYeahCa/master/twitter.png" style="width: 100%; height: auto;">
+  </div>
+</div>
+
+    <!-- Main Content -->
     <div id="root"></div>
+
+    <!-- JavaScript  Loading Screen -->
+    <script>
+      setTimeout(function() {
+        var loadingDiv = document.getElementById('loading');
+        loadingDiv.style.opacity = '0';
+        setTimeout(function() { loadingDiv.style.display = 'none'; }, 1000);
+      }, 2000);
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            const img = document.querySelector('img[src="./src/spinner.gif"]');
+            img.onload = function() {
+                img.parentElement.classList.add('xyz-in');
+            };
+        }, 6000); // 3000 milliseconds delay
+    });
+</script>
+
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
