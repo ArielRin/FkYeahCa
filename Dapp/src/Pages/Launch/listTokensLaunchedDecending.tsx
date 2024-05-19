@@ -7,6 +7,8 @@ import launchpadAbi from './launchpadABI.json';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { BrowserRouter as Router, Link as RouterLink, useParams,  Routes, Route } from 'react-router-dom';
 
+import Footer from '../Components/Footer/Footer';
+
 
 import headerLogoImage from "./madcontractsTextLogo.png";
 import mainbackgroundImage from "./madbkg.png";
@@ -137,7 +139,7 @@ const LaunchPad: React.FC = () => {
             >
             </Box>
 
-            
+
     <Container
     bg="rgba(0, 0, 0, 0.7)" marginBottom="200px" color="white" borderRadius="xl" boxShadow="xl">
       <Text fontSize="2xl" mb={4}>Latest Deployed with Mad Contracts</Text>
@@ -178,6 +180,8 @@ const LaunchPad: React.FC = () => {
       marginBottom="400px"
     >
     </Box>
+
+    < Footer/>
     </Box>
     </Box>
 

@@ -7,8 +7,11 @@ import { networkInfo } from './Launch/networks';
 import headerLogoImage from "./Launch/madcontractsTextLogo.png";
 import mainbackgroundImage from "./Launch/madbkg.png";
 
+
+import Footer from './Components/Footer/Footer';
+
 function NetworkIcons() {
-  const networkArray = Object.values(networkInfo); // Convert the object to an array
+  const networkArray = Object.values(networkInfo);
 
   return (
     <Flex direction="row" justifyContent="center" alignItems="center" mt={4}>
@@ -83,16 +86,6 @@ function App() {
             </Flex>
           </Container>
 
-            <NetworkIcons />
-          <div
-            className="wrapper"
-            style={{
-              backgroundColor: 'black',
-              color: 'white',
-              backgroundSize: 'cover',
-            }}
-          >
-          </div>
           <Box
             flex={1}
             p={0}
@@ -103,6 +96,8 @@ function App() {
             marginBottom="550px"
           >
           </Box>
+
+          < Footer/>
         </Box>
       </Box>
     </Box>
@@ -110,3 +105,16 @@ function App() {
 }
 
 export default App;
+          //
+          //
+          //
+          //   <NetworkIcons />
+          // <div
+          //   className="wrapper"
+          //   style={{
+          //     backgroundColor: 'black',
+          //     color: 'white',
+          //     backgroundSize: 'cover',
+          //   }}
+          // >
+          // </div>

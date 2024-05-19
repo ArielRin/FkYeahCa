@@ -16,19 +16,16 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  SliderMark,
 } from "@chakra-ui/react";
+
+import Footer from '../Components/Footer/Footer';
+
 
 import launchpadAbi from './launchpadABI.json';
 import headerLogoImage from "./madcontractsTextLogo.png";
 import mainbackgroundImage from "./madbkg.png";
 import { contractAddresses, ContractAddresses } from './launchMemeContractAddresses';
 import { networkInfo } from './networks';
-
-
-
-
-
 
 const LaunchPad: React.FC = () => {
   const [web3, setWeb3] = useState<Web3 | null>(null);
@@ -132,7 +129,7 @@ const LaunchPad: React.FC = () => {
   const deployToken = async () => {
     if (contract) {
       try {
-        const initialSupply = ethers.utils.parseUnits(formData.initialSupply, 18);
+        const initialSupply = ethers.BigNumber.from(formData.initialSupply);
         const buyTax = ethers.BigNumber.from(formData.buyTax);
         const sellTax = ethers.BigNumber.from(formData.sellTax);
         const transferTax = ethers.BigNumber.from(formData.transferTax);
@@ -350,6 +347,7 @@ const LaunchPad: React.FC = () => {
             marginBottom="250px"
           />
         </Box>
+        < Footer/>
       </Box>
     </Box>
   );
