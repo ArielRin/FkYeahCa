@@ -105,16 +105,4 @@ function App() {
 }
 
 export default App;
-          //
-          //
-          //
-          //   <NetworkIcons />
-          // <div
-          //   className="wrapper"
-          //   style={{
-          //     backgroundColor: 'black',
-          //     color: 'white',
-          //     backgroundSize: 'cover',
-          //   }}
-          // >
-          // </div>
+          
